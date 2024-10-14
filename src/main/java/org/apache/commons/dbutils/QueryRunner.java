@@ -28,6 +28,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbutils.constants.SQLExceptionCostants;
+
 /**
  * Executes SQL queries with pluggable strategies for handling
  * {@code ResultSet}s.  This class is thread safe.
@@ -131,15 +133,15 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public int[] batch(final Connection conn, final String sql, final Object[][] params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         if (params == null) {
-            throw new SQLException("Null parameters. If parameters aren't need, pass an empty array.");
+            throw new SQLException(SQLExceptionCostants.NULL_PARAMS_ERROR);
         }
 
         PreparedStatement stmt = null;
@@ -206,11 +208,11 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public int execute(final Connection conn, final String sql, final Object... params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         CallableStatement stmt = null;
@@ -257,15 +259,15 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public <T> List<T> execute(final Connection conn, final String sql, final ResultSetHandler<T> rsh, final Object... params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         if (rsh == null) {
-            throw new SQLException("Null ResultSetHandler");
+            throw new SQLException(SQLExceptionCostants.NULL_RESULT_SET_ERROR);
         }
 
         CallableStatement stmt = null;
@@ -381,15 +383,15 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public <T> T insert(final Connection conn, final String sql, final ResultSetHandler<T> rsh, final Object... params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         if (rsh == null) {
-            throw new SQLException("Null ResultSetHandler");
+            throw new SQLException(SQLExceptionCostants.NULL_RESULT_SET_ERROR);
         }
 
         Statement stmt = null;
@@ -469,15 +471,15 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public <T> T insertBatch(final Connection conn, final String sql, final ResultSetHandler<T> rsh, final Object[][] params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         if (params == null) {
-            throw new SQLException("Null parameters. If parameters aren't need, pass an empty array.");
+            throw new SQLException(SQLExceptionCostants.NULL_PARAMS_ERROR);
         }
 
         PreparedStatement stmt = null;
@@ -583,15 +585,15 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public <T> T query(final Connection conn, final String sql, final ResultSetHandler<T> rsh, final Object... params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         if (rsh == null) {
-            throw new SQLException("Null ResultSetHandler");
+            throw new SQLException(SQLExceptionCostants.NULL_RESULT_SET_ERROR);
         }
 
         Statement stmt = null;
@@ -759,11 +761,11 @@ public class QueryRunner extends AbstractQueryRunner {
      */
     public int update(final Connection conn, final String sql, final Object... params) throws SQLException {
         if (conn == null) {
-            throw new SQLException("Null connection");
+            throw new SQLException(SQLExceptionCostants.NULL_CONNECTION_ERROR);
         }
 
         if (sql == null) {
-            throw new SQLException("Null SQL statement");
+            throw new SQLException(SQLExceptionCostants.NULL_STATEMENT_ERROR);
         }
 
         Statement stmt = null;
