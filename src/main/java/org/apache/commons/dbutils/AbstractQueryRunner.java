@@ -300,57 +300,77 @@ public abstract class AbstractQueryRunner {
      * @throws SQLException
      *             if a database access error occurs
      */
+
+    //ISSUE #1, MODIFICA FATTA 13/10/2024
     public void fillStatement(final PreparedStatement stmt, final ParameterMetaData pmd, final Object... params)
             throws SQLException {
 
-        // check the parameter count, if we can
+        // Verifica il numero di parametri
+        checkParameterCount(pmd, params);
+
+        // Se non ci sono parametri, esci
+        if (params == null) {
+            return;
+        }
+
+        // Gestisci CallableStatement se necessario
+        CallableStatement call = getCallableStatement(stmt);
+
+        // Gestisci i parametri passati
+        handleParameters(stmt, pmd, params, call);
+    }
+
+    private void checkParameterCount(final ParameterMetaData pmd, final Object[] params) throws SQLException {
         if (!pmdKnownBroken && pmd != null) {
             final int stmtCount = pmd.getParameterCount();
             final int paramsCount = params == null ? 0 : params.length;
 
             if (stmtCount != paramsCount) {
-                throw new SQLException("Wrong number of parameters: expected "
-                        + stmtCount + ", was given " + paramsCount);
-            }
-        }
-
-        // nothing to do here
-        if (params == null) {
-            return;
-        }
-
-        CallableStatement call = null;
-        if (stmt instanceof CallableStatement) {
-            call = (CallableStatement) stmt;
-        }
-
-        for (int i = 0; i < params.length; i++) {
-            if (params[i] != null) {
-                if (call != null && params[i] instanceof OutParameter) {
-                    ((OutParameter<?>) params[i]).register(call, i + 1);
-                } else {
-                    stmt.setObject(i + 1, params[i]);
-                }
-            } else {
-                // VARCHAR works with many drivers regardless
-                // of the actual column type. Oddly, NULL and
-                // OTHER don't work with Oracle's drivers.
-                int sqlType = Types.VARCHAR;
-                if (!pmdKnownBroken) {
-                    // TODO see DBUTILS-117: does it make sense to catch SQLEx here?
-                    try {
-                        /*
-                         * It's not possible for pmdKnownBroken to change from true to false, (once true, always true) so pmd cannot be null here.
-                         */
-                        sqlType = pmd.getParameterType(i + 1);
-                    } catch (final SQLException e) {
-                        pmdKnownBroken = true;
-                    }
-                }
-                stmt.setNull(i + 1, sqlType);
+                throw new SQLException("Wrong number of parameters: expected " + stmtCount + ", was given " + paramsCount);
             }
         }
     }
+
+    private CallableStatement getCallableStatement(final PreparedStatement stmt) {
+        if (stmt instanceof CallableStatement) {
+            return (CallableStatement) stmt;
+        }
+        return null;
+    }
+
+    private void handleParameters(final PreparedStatement stmt, final ParameterMetaData pmd, final Object[] params, CallableStatement call)
+            throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            if (params[i] != null) {
+                handleNonNullParameter(stmt, params, call, i);
+            } else {
+                handleNullParameter(stmt, pmd, i);
+            }
+        }
+    }
+
+    private void handleNonNullParameter(final PreparedStatement stmt, final Object[] params, CallableStatement call, int index)
+            throws SQLException {
+        if (call != null && params[index] instanceof OutParameter) {
+            ((OutParameter<?>) params[index]).register(call, index + 1);
+        } else {
+            stmt.setObject(index + 1, params[index]);
+        }
+    }
+
+    private void handleNullParameter(final PreparedStatement stmt, final ParameterMetaData pmd, int index)
+            throws SQLException {
+        int sqlType = Types.VARCHAR;
+        if (!pmdKnownBroken) {
+            try {
+                sqlType = pmd.getParameterType(index + 1);
+            } catch (final SQLException e) {
+                pmdKnownBroken = true;
+            }
+        }
+        stmt.setNull(index + 1, sqlType);
+    }
+    //FINE MODIFICA
 
     /**
      * Fill the {@code PreparedStatement} replacement parameters with the
