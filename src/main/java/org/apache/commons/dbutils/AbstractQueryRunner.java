@@ -301,7 +301,7 @@ public abstract class AbstractQueryRunner {
      *             if a database access error occurs
      */
 
-    //ISSUE #1, MODIFICA FATTA 13/10/2024
+    //ISSUE #1, MODIFICA FATTA il 13/10/2024
     public void fillStatement(final PreparedStatement stmt, final ParameterMetaData pmd, final Object... params)
             throws SQLException {
 

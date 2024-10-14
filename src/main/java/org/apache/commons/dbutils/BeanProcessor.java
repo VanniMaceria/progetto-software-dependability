@@ -217,53 +217,63 @@ public class BeanProcessor {
      * @return An int[] with column index to property index mappings.  The 0th
      * element is meaningless because JDBC column indexing starts at 1.
      */
+    //ISSUE #2, MODIFICA FATTA il 14/10/2024
     protected int[] mapColumnsToProperties(final ResultSetMetaData rsmd,
-            final PropertyDescriptor[] props) throws SQLException {
+                                           final PropertyDescriptor[] props) throws SQLException {
 
         final int cols = rsmd.getColumnCount();
         final int[] columnToProperty = new int[cols + 1];
         Arrays.fill(columnToProperty, PROPERTY_NOT_FOUND);
 
         for (int col = 1; col <= cols; col++) {
-            String columnName = rsmd.getColumnLabel(col);
-            if (null == columnName || 0 == columnName.length()) {
-              columnName = rsmd.getColumnName(col);
-            }
-            String propertyName = columnToPropertyOverrides.get(columnName);
-            if (propertyName == null) {
-                propertyName = columnName;
-            }
-            if (propertyName == null) {
-                propertyName = Integer.toString(col);
-            }
+            String columnName = getColumnName(rsmd, col);
+            String propertyName = resolvePropertyName(columnName, col);
 
-            for (int i = 0; i < props.length; i++) {
-                final PropertyDescriptor prop = props[i];
-                final Method reader = prop.getReadMethod();
-
-                // Check for @Column annotations as explicit marks
-                final Column column;
-                if (reader != null) {
-                    column = reader.getAnnotation(Column.class);
-                } else {
-                    column = null;
-                }
-
-                final String propertyColumnName;
-                if (column != null) {
-                    propertyColumnName = column.name();
-                } else {
-                    propertyColumnName = prop.getName();
-                }
-                if (propertyName.equalsIgnoreCase(propertyColumnName)) {
-                    columnToProperty[col] = i;
-                    break;
-                }
-            }
+            mapColumnToProperty(props, columnToProperty, col, propertyName);
         }
 
         return columnToProperty;
     }
+
+    private String getColumnName(final ResultSetMetaData rsmd, int col) throws SQLException {
+        String columnName = rsmd.getColumnLabel(col);
+        if (null == columnName || columnName.isEmpty()) {
+            columnName = rsmd.getColumnName(col);
+        }
+        return columnName;
+    }
+
+    private String resolvePropertyName(String columnName, int col) {
+        String propertyName = columnToPropertyOverrides.get(columnName);
+        if (propertyName == null) {
+            propertyName = columnName != null ? columnName : Integer.toString(col);
+        }
+        return propertyName;
+    }
+
+    private void mapColumnToProperty(final PropertyDescriptor[] props, int[] columnToProperty, int col, String propertyName) {
+        for (int i = 0; i < props.length; i++) {
+            final PropertyDescriptor prop = props[i];
+            final String propertyColumnName = getPropertyColumnName(prop);
+
+            if (propertyName.equalsIgnoreCase(propertyColumnName)) {
+                columnToProperty[col] = i;
+                break;
+            }
+        }
+    }
+
+    private String getPropertyColumnName(final PropertyDescriptor prop) {
+        final Method reader = prop.getReadMethod();
+        if (reader != null) {
+            final Column column = reader.getAnnotation(Column.class);
+            if (column != null) {
+                return column.name();
+            }
+        }
+        return prop.getName();
+    }
+    //FINE MODIFICA
 
     /**
      * Check whether a value is of the same primitive type as {@code targetType}.
