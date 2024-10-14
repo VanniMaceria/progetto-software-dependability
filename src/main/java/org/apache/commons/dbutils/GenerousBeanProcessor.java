@@ -33,6 +33,7 @@ public class GenerousBeanProcessor extends BeanProcessor {
      * Default constructor.
      */
     public GenerousBeanProcessor() {
+        //costruttore lasciato intenzionalmente vuoto perchè la classe può essere istanziata senza inizializzare nulla
     }
 
     @Override
