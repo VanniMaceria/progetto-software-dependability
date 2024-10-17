@@ -16,8 +16,8 @@
  */
 package org.apache.commons.dbutils;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -79,19 +79,44 @@ public class DbUtilsTest {
         verify(mockCon).close();
     }
 
+    //issue #7
     @Test
     public void testCloseNullConnection() throws Exception {
-        DbUtils.close((Connection) null);
+        boolean throwsException = false;
+
+        try {
+            DbUtils.close((Connection) null);
+        } catch (Exception e) {
+            throwsException = true;
+        }
+        //mi aspetto che il valore di throwsException sia false, se così non è printa il messaggio
+        assertFalse("The value of SQL Connection can also be null", throwsException);
     }
 
+    //issue #8
     @Test
     public void testCloseNullResultSet() throws Exception {
-        DbUtils.close((ResultSet) null);
+        boolean throwsException = false;
+
+        try {
+            DbUtils.close((ResultSet) null);
+        } catch (Exception e) {
+            throwsException = true;
+        }
+        assertFalse("The ResultSet can also be null", throwsException);
     }
 
+    //issue #9
     @Test
     public void testCloseNullStatement() throws Exception {
-        DbUtils.close((Statement) null);
+        boolean throwsException = false;
+
+        try {
+            DbUtils.close((Statement) null);
+        } catch (Exception e) {
+            throwsException = true;
+        }
+        assertFalse("The Statement can also be null", throwsException);
     }
 
     @Test
