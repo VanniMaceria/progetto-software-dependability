@@ -15,30 +15,8 @@
  * limitations under the License.
  */
 
+/**
+ * Implementations of the org.apache.commons.dbutils.ResultSetHandler interface.
+ */
+
 package org.apache.commons.dbutils.constants;
-
-public final class SQLExceptionCostants {
-    /**
-     * Error message for a null database connection.
-     */
-    public static final String NULL_CONNECTION_ERROR = "Null connection error";
-
-    /**
-     * Error message for null params .
-     */
-    public static final String NULL_PARAMS_ERROR = "Null parameters error";
-
-    /**
-     * Error message for a null sql statement.
-     */
-    public static final String NULL_STATEMENT_ERROR = "Null SQL statement";
-
-    /**
-     * Error message for a null result set .
-     */
-    public static final String NULL_RESULT_SET_ERROR = "Null result set error";
-
-    private SQLExceptionCostants() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
-}
