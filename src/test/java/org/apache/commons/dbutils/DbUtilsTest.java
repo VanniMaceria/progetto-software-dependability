@@ -18,6 +18,7 @@ package org.apache.commons.dbutils;
 
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -182,9 +183,12 @@ public class DbUtilsTest {
         verify(mockStatement).close();
     }
 
+    //issue #11
     @Test
     public void testCloseQuietlyNullConnection() throws Exception {
-        DbUtils.closeQuietly((Connection) null);
+        assertDoesNotThrow(() -> {
+            DbUtils.closeQuietly((Connection) null);
+        });
     }
 
     @Test
