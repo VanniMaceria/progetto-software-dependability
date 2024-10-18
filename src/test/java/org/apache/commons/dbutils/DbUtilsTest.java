@@ -191,14 +191,20 @@ public class DbUtilsTest {
         });
     }
 
+    //issue #12
     @Test
     public void testCloseQuietlyNullResultSet() throws Exception {
-        DbUtils.closeQuietly((ResultSet) null);
+        assertDoesNotThrow(() -> {
+            DbUtils.closeQuietly((ResultSet) null);
+        });
     }
 
+    //issue #13
     @Test
     public void testCloseQuietlyNullStatement() throws Exception {
-        DbUtils.closeQuietly((Statement) null);
+        assertDoesNotThrow(() -> {
+            DbUtils.closeQuietly((Statement) null);
+        });
     }
 
     @Test
