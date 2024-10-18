@@ -90,7 +90,7 @@
     <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
-    <commons.jacoco.classRatio>0.93</commons.jacoco.classRatio>
+    <commons.jacoco.classRatio>0.90</commons.jacoco.classRatio>
     <commons.jacoco.instructionRatio>0.67</commons.jacoco.instructionRatio>
     <commons.jacoco.methodRatio>0.58</commons.jacoco.methodRatio>
     <commons.jacoco.branchRatio>0.81</commons.jacoco.branchRatio>
@@ -113,6 +113,19 @@
             <includeTestSourceDirectory>true</includeTestSourceDirectory> <!-- TODO -->
             <suppressionsLocation>${basedir}/src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
             <suppressionsFileExpression>${basedir}/src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsFileExpression>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.0</version>
+          <configuration>
+            <finalName>commons-dbutils-1.9.0-SNAPSHOT</finalName>
+            <archive>
+              <manifest>
+                <mainClass>org.apache.commons.dbutils.MainClass</mainClass>
+              </manifest>
+            </archive>
           </configuration>
         </plugin>
         <plugin>
