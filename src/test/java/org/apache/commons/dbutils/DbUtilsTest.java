@@ -168,7 +168,7 @@ public class DbUtilsTest {
         final Connection mockConnection = mock(Connection.class);
         doThrow(SQLException.class).when(mockConnection).close();
         DbUtils.closeQuietly(mockConnection);
-        //la connessione viene chiusa senza che l'eccezione si propaghi, mi sembra corretto così com'è
+        verify(mockConnection).close();
     }
 
     @Test
@@ -214,12 +214,18 @@ public class DbUtilsTest {
         verify(mockResultSet).close();
     }
 
+    //issue #15
     @Test
     public void testCloseQuietlyResultSetThrowingException() throws Exception {
         final ResultSet mockResultSet = mock(ResultSet.class);
+        // Simula il lancio di una SQLException quando viene chiamato close
         doThrow(SQLException.class).when(mockResultSet).close();
+        // Chiusura del ResultSet
         DbUtils.closeQuietly(mockResultSet);
+        // Verifica che close sia stato chiamato
+        verify(mockResultSet).close();
     }
+
 
     @Test
     public void testCloseQuietlyStatement() throws Exception {
