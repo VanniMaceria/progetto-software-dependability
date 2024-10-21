@@ -234,11 +234,13 @@ public class DbUtilsTest {
         verify(mockStatement).close();
     }
 
+    //issue #14
     @Test
     public void testCloseQuietlyStatementThrowingException() throws Exception {
         final Statement mockStatement = mock(Statement.class);
         doThrow(SQLException.class).when(mockStatement).close();
         DbUtils.closeQuietly(mockStatement);
+        verify(mockStatement).close();
     }
 
     @Test
