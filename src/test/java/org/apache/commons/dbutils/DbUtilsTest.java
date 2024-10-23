@@ -282,11 +282,10 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
+    //#issue 16
     @Test
     public void testCommitAndCloseQuietlyWithNullDoesNotThrowAnSQLException() {
-
-        DbUtils.commitAndCloseQuietly(null);
-
+        assertDoesNotThrow(() -> DbUtils.commitAndCloseQuietly(null));
     }
 
     @Test
