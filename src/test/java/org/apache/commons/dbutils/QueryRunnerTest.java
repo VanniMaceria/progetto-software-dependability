@@ -707,11 +707,22 @@ public class QueryRunnerTest {
         callExecuteWithResultSetWithException(handler, "unit", "test");
     }
 
+    //issue #21
     @Test
     public void testFillStatementWithBean() throws Exception {
         final MyBean bean = new MyBean();
+        bean.setA(123);
+        bean.setB(20.00);
+        bean.setC("stringa prova");
+
         when(meta.getParameterCount()).thenReturn(3);
+
         runner.fillStatementWithBean(prepStmt, bean, "a", "b", "c");
+
+        // Assert: Verifica che i metodi del PreparedStatement siano stati chiamati con i valori corretti
+        verify(prepStmt).setObject(1, 123);
+        verify(prepStmt).setObject(2, 20.00);
+        verify(prepStmt).setObject(3, "stringa prova");
     }
 
     @Test(expected = NullPointerException.class)
