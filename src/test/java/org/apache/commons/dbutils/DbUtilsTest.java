@@ -323,9 +323,10 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
+    //issue #17
     @Test
     public void testRollbackAndCloseNull() throws Exception {
-        DbUtils.rollbackAndClose(null);
+        assertDoesNotThrow(() -> DbUtils.rollbackAndClose(null));
     }
 
     @Test
@@ -336,6 +337,7 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
+    //issue #18
     @Test
     public void testRollbackAndCloseQuietlyNull() throws Exception {
         DbUtils.rollbackAndCloseQuietly(null);
