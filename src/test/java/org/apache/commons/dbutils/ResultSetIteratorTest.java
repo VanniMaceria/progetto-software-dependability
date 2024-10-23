@@ -17,6 +17,7 @@
 package org.apache.commons.dbutils;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,13 +30,16 @@ import org.junit.Test;
  */
 public class ResultSetIteratorTest extends BaseTestCase {
 
+    //issue #22
     @Test
-    public void testCreatesResultSetIteratorTakingThreeArgumentsAndCallsRemove() {
-
+    public void testCreatesResultSetIteratorTakingThreeArgumentsAndCallsRemove() throws SQLException {
         final ResultSet resultSet = mock(ResultSet.class);
         final ResultSetIterator resultSetIterator = new ResultSetIterator(resultSet, null);
+
         resultSetIterator.remove();
 
+        // Assert: Verifica che il metodo deleteRow() del ResultSet sia stato chiamato
+        verify(resultSet).deleteRow();
     }
 
     public void testNext() {
