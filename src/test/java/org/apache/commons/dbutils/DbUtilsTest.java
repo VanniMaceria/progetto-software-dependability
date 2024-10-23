@@ -340,7 +340,7 @@ public class DbUtilsTest {
     //issue #18
     @Test
     public void testRollbackAndCloseQuietlyNull() throws Exception {
-        DbUtils.rollbackAndCloseQuietly(null);
+        assertDoesNotThrow(() -> DbUtils.rollbackAndCloseQuietly(null));
     }
 
     @Test
