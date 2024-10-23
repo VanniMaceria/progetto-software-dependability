@@ -282,7 +282,7 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
-    //#issue 16
+    //issue #16
     @Test
     public void testCommitAndCloseQuietlyWithNullDoesNotThrowAnSQLException() {
         assertDoesNotThrow(() -> DbUtils.commitAndCloseQuietly(null));
@@ -366,9 +366,10 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
+    //issue #20
     @Test
     public void testRollbackNull() throws Exception {
-        DbUtils.rollback(null);
+        assertDoesNotThrow(() -> DbUtils.rollback(null));
     }
 
     @Test
@@ -378,9 +379,10 @@ public class DbUtilsTest {
         verify(mockConnection).rollback();
     }
 
+    //issue #19
     @Test
     public void testRollbackQuietlyNull() throws Exception {
-        DbUtils.rollbackQuietly(null);
+        assertDoesNotThrow(() -> DbUtils.rollbackQuietly(null));
     }
 
     @Test
