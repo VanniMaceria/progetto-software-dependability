@@ -65,6 +65,7 @@ public class TestBean {
      * Constructor for TestBean.
      */
     public TestBean() {
+        //costruttore volutamente vuoto
     }
 
     public double getColumnProcessorDoubleTest() {
