@@ -52,7 +52,7 @@ final class SqlNullCheckedResultSetMockBlob implements Blob {
      */
     @Override
     public void free() throws SQLException {
-
+        //non ancora implementato
     }
 
     @Override
@@ -117,7 +117,7 @@ final class SqlNullCheckedResultSetMockClob implements Clob {
      */
     @Override
     public void free() throws SQLException {
-
+        //non ancora implementato
     }
 
     @Override
