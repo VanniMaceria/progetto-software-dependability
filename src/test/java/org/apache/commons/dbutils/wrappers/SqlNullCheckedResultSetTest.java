@@ -105,7 +105,7 @@ final class SqlNullCheckedResultSetMockBlob implements Blob {
 
     @Override
     public void truncate(final long len) throws SQLException {
-
+        //ancora da implementare
     }
 
 }
