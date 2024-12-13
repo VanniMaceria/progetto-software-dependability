@@ -394,30 +394,32 @@ public class QueryRunner extends AbstractQueryRunner {
             throw new SQLException(SQLExceptionCostants.NULL_RESULT_SET_ERROR);
         }
 
-        Statement stmt = null;
+        PreparedStatement ps = null;
         T generatedKeys = null;
 
         try {
             if (params != null && params.length > 0) {
-                final PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                stmt = ps;
+                ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 this.fillStatement(ps, params);
                 ps.executeUpdate();
             } else {
-                stmt = conn.createStatement();
-                stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+                // Usa un PreparedStatement anche senza parametri
+                ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.executeUpdate();
             }
-            try (ResultSet resultSet = stmt.getGeneratedKeys()) {
+
+            try (ResultSet resultSet = ps.getGeneratedKeys()) {
                 generatedKeys = rsh.handle(resultSet);
             }
         } catch (final SQLException e) {
             rethrow(e, sql, params);
         } finally {
-            close(stmt);
+            close(ps);
         }
 
         return generatedKeys;
     }
+
 
     /**
      * Executes the given INSERT SQL without any replacement parameters.

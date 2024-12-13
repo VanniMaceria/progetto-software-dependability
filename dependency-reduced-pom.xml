@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>commons-parent</artifactId>
+    <groupId>org.apache.commons</groupId>
+    <version>77</version>
+    <relativePath>../pom.xml/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>commons-dbutils</groupId>
+  <artifactId>commons-dbutils</artifactId>
+  <name>Apache Commons DbUtils</name>
+  <version>1.9.0-SNAPSHOT</version>
+  <description>The Apache Commons DbUtils package is a set of Java utility classes for easing JDBC development.</description>
+  <url>https://commons.apache.org/proper/commons-dbutils/</url>
+  <issueManagement>
+    <system>jira</system>
+    <url>https://issues.apache.org/jira/browse/DBUTILS</url>
+  </issueManagement>
+  <inceptionYear>2002</inceptionYear>
+  <developers>
+    <developer>
+      <id>baliuka</id>
+      <name>Juozas Baliuka</name>
+      <email>baliuka@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>scaswell</id>
+      <name>Steven Caswell</name>
+      <email>steven@caswell.name</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>dfabulich</id>
+      <name>Dan Fabulich</name>
+      <email>dan@fabulich.com</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>dgraham</id>
+      <name>David Graham</name>
+      <email>dgraham@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>yoavs</id>
+      <name>Yoav Shapira</name>
+      <email>yoavs@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>wspeirs</id>
+      <name>William Speirs</name>
+      <email>wspeirs@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>simonetripodi</id>
+      <name>Simone Tripodi</name>
+      <email>simonetripodi at apache dot org</email>
+    </developer>
+    <developer>
+      <id>bayard</id>
+      <name>Henri Yandell</name>
+      <email>bayard@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>britter</id>
+      <name>Benedikt Ritter</name>
+      <email>britter@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>thecarlhall</id>
+      <name>Carl Hall</name>
+      <email>thecarlhall@apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>ggregory</id>
+      <name>Gary Gregory</name>
+      <email>ggregory at apache.org</email>
+      <url>https://www.garygregory.com</url>
+      <organization>The Apache Software Foundation</organization>
+      <organizationUrl>https://www.apache.org/</organizationUrl>
+      <roles>
+        <role>PMC Member</role>
+      </roles>
+      <timezone>America/New_York</timezone>
+      <properties>
+        <picUrl>https://people.apache.org/~ggregory/img/garydgregory80.png</picUrl>
+      </properties>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Péter Bagyinszki</name>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Alan Canon</name>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Stefan Fleiter</name>
+      <email>stefan.fleiter@web.de</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Adkins Kendall</name>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Markus Khouri</name>
+      <email>mkhouri.list@gmail.com</email>
+      <roles>
+        <role>Documentation</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Uli Kleeberger</name>
+      <email>ukleeberger@web.de</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Piotr Lakomy</name>
+      <email>piotrl@cft-inc.net</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Corby Page</name>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Michael Schuerig</name>
+      <email>michael@schuerig.de</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Norris Shelton</name>
+      <email>norrisshelton@yahoo.com</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Stevo Slavic</name>
+      <email>sslavic at gmail dot com</email>
+    </contributor>
+  </contributors>
+  <scm>
+    <connection>scm:git:git://git.apache.org/commons-dbutils.git</connection>
+    <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-dbutils.git</developerConnection>
+    <url>https://gitbox.apache.org/repos/asf?p=commons-dbutils.git</url>
+  </scm>
+  <build>
+    <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check spotbugs:check pmd:check pmd:cpd-check clean javadoc:javadoc</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${commons.checkstyle-plugin.version}</version>
+          <configuration>
+            <configLocation>${checkstyle.config.file}</configLocation>
+            <enableRulesSummary>false</enableRulesSummary>
+            <headerLocation>${checkstyle.header.file}</headerLocation>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <suppressionsLocation>${basedir}/src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+            <suppressionsFileExpression>${basedir}/src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsFileExpression>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.0</version>
+          <configuration>
+            <finalName>commons-dbutils-1.9.0-SNAPSHOT</finalName>
+            <archive>
+              <manifest>
+                <mainClass>org.apache.commons.dbutils.MainClass</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <configuration>
+            <threshold>Normal</threshold>
+            <effort>Default</effort>
+            <excludeFilterFile>${basedir}/src/site/resources/spotbugs/sb-excludes.xml</excludeFilterFile>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-junit5-plugin</artifactId>
+        <version>1.2.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.17.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>1.2.1</version>
+          </dependency>
+        </dependencies>
+        <configuration />
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.openjdk.jmh</groupId>
+              <artifactId>jmh-generator-annprocess</artifactId>
+              <version>1.37</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <transformers>
+                <transformer>
+                  <mainClass>org.openjdk.jmh.Main</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/BaseTestCase.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/bin.xml</descriptor>
+            <descriptor>src/main/assembly/src.xml</descriptor>
+          </descriptors>
+          <tarLongFileMode>gnu</tarLongFileMode>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes>
+            <exclude>src/test/java/**</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.txt</exclude>
+            <exclude>**/*.html</exclude>
+            <exclude>**/*.css</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>rc</id>
+      <distributionManagement>
+        <site>
+          <id>apache.website</id>
+          <name>Apache Commons Release Candidate Staging Site</name>
+          <url>${commons.deployment.protocol}://people.apache.org/www/people.apache.org/builds/commons/${commons.componentid}/${commons.release.version}/${commons.rc.version}/site</url>
+        </site>
+      </distributionManagement>
+    </profile>
+  </profiles>
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <version>5.11.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.14.1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>byte-buddy</artifactId>
+          <groupId>net.bytebuddy</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>byte-buddy-agent</artifactId>
+          <groupId>net.bytebuddy</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>objenesis</artifactId>
+          <groupId>org.objenesis</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.11.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit-jupiter-api</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit-jupiter-params</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit-jupiter-engine</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-generator-annprocess</artifactId>
+      <version>1.37</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>${commons.changes.version}</version>
+        <configuration>
+          <xmlPath>${basedir}/src/changes/changes.xml</xmlPath>
+          <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <configLocation>${checkstyle.config.file}</configLocation>
+          <enableRulesSummary>false</enableRulesSummary>
+          <headerLocation>${checkstyle.header.file}</headerLocation>
+          <suppressionsLocation>${basedir}/src/site/resources/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+          <suppressionsFileExpression>${basedir}/src/site/resources/checkstyle/checkstyle-suppressions.xml</suppressionsFileExpression>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <configuration>
+          <threshold>Normal</threshold>
+          <effort>Default</effort>
+          <excludeFilterFile>${basedir}/src/site/resources/spotbugs/sb-excludes.xml</excludeFilterFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${commons.pmd.version}</version>
+        <configuration>
+          <targetJdk>${maven.compiler.source}</targetJdk>
+          <rulesets>
+            <ruleset>${basedir}/src/site/resources/pmd/pmd-ruleset.xml</ruleset>
+          </rulesets>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+  <distributionManagement>
+    <site>
+      <id>apache.website</id>
+      <name>Apache Commons Site</name>
+      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}</url>
+    </site>
+  </distributionManagement>
+  <properties>
+    <commons.release.version>1.9.0</commons.release.version>
+    <commons.bc.version>1.8.1</commons.bc.version>
+    <commons.jira.id>DBUTILS</commons.jira.id>
+    <commons.jacoco.methodRatio>0.54</commons.jacoco.methodRatio>
+    <commons.jacoco.complexityRatio>0.46</commons.jacoco.complexityRatio>
+    <maven.compiler.source>11</maven.compiler.source>
+    <commons.next.version>1.9.1</commons.next.version>
+    <commons.packageId>dbutils</commons.packageId>
+    <maven.compiler.release>11</maven.compiler.release>
+    <checkstyle.header.file>${basedir}/src/conf/checkstyle/checkstyle-header.txt</checkstyle.header.file>
+    <checkstyle.config.file>${basedir}/src/conf/checkstyle/checkstyle.xml</checkstyle.config.file>
+    <commons.jacoco.branchRatio>0.39</commons.jacoco.branchRatio>
+    <commons.jacoco.classRatio>0.65</commons.jacoco.classRatio>
+    <commons.jacoco.instructionRatio>0.39</commons.jacoco.instructionRatio>
+    <commons.componentid>dbutils</commons.componentid>
+    <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
+    <commons.jacoco.lineRatio>0.39</commons.jacoco.lineRatio>
+    <commons.jira.pid>12310470</commons.jira.pid>
+    <commons.rc.version>RC1</commons.rc.version>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
+    <commons.release.isDistModule>true</commons.release.isDistModule>
+  </properties>
+</project>

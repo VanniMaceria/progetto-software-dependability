@@ -517,11 +517,15 @@ public abstract class AbstractQueryRunner {
      * @throws SQLException
      *             if a database access error occurs
      */
-    protected CallableStatement prepareCall(final Connection conn, final String sql)
+    protected CallableStatement prepareCall(final Connection conn, final String sql, final Object... parameters)
             throws SQLException {
-
-        return conn.prepareCall(sql);
+        CallableStatement stmt = conn.prepareCall(sql);
+        for (int i = 0; i < parameters.length; i++) {
+            stmt.setObject(i + 1, parameters[i]); // Imposta i parametri per la query
+        }
+        return stmt;
     }
+
 
     /**
      * Factory method that creates and initializes a {@code Connection}
@@ -599,13 +603,15 @@ public abstract class AbstractQueryRunner {
      *             if a database access error occurs
      * @since 1.6
      */
-    protected PreparedStatement prepareStatement(final Connection conn, final String sql, final int returnedKeys)
+    protected PreparedStatement prepareStatement(final Connection conn, final String sql, final int returnedKeys, final Object... parameters)
             throws SQLException {
 
-        @SuppressWarnings("resource")
-        final
-        PreparedStatement ps = conn.prepareStatement(sql, returnedKeys);
+        final PreparedStatement ps = conn.prepareStatement(sql, returnedKeys);
         try {
+            // Imposta i parametri in modo dinamico
+            for (int i = 0; i < parameters.length; i++) {
+                ps.setObject(i + 1, parameters[i]); // Associa ciascun parametro al relativo placeholder
+            }
             configureStatement(ps);
         } catch (final SQLException e) {
             ps.close();
@@ -613,6 +619,7 @@ public abstract class AbstractQueryRunner {
         }
         return ps;
     }
+
 
     /**
      * Throws a new exception with a more informative error message.

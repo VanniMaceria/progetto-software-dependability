@@ -25,12 +25,14 @@ import java.time.Duration;
 import org.junit.Test;
 
 public class StatementConfigurationTest {
-    /**
-     * Test that a builder with all values set yields like values in the constructed configuration.
-     */
+
     @Test
-    public void testBuilder() {
-        final StatementConfiguration.Builder builder = new StatementConfiguration.Builder().fetchDirection(1).fetchSize(2).maxFieldSize(3).maxRows(4)
+    public void testBuilderWithAllValuesSet() {
+        final StatementConfiguration.Builder builder = new StatementConfiguration.Builder()
+                .fetchDirection(1)
+                .fetchSize(2)
+                .maxFieldSize(3)
+                .maxRows(4)
                 .queryTimeout(5);
         final StatementConfiguration config = builder.build();
 
@@ -61,11 +63,8 @@ public class StatementConfigurationTest {
         assertEquals(Duration.ofSeconds(3), config2.getQueryTimeoutDuration());
     }
 
-    /**
-     * Test that the constructor of {@code StatementConfiguration} correctly sets all values.
-     */
     @Test
-    public void testConstructor() {
+    public void testConstructorSetsAllValues() {
         final StatementConfiguration config = new StatementConfiguration(1, 2, 3, 4, 5);
 
         assertEquals(Integer.valueOf(1), config.getFetchDirection());
@@ -75,11 +74,8 @@ public class StatementConfigurationTest {
         assertEquals(Integer.valueOf(5), config.getQueryTimeout());
     }
 
-    /**
-     * Test that an empty builder yields null values for all configuration settings.
-     */
     @Test
-    public void testEmptyBuilder() {
+    public void testEmptyBuilderYieldsNullValues() {
         final StatementConfiguration config = new StatementConfiguration.Builder().build();
 
         assertFalse(config.isFetchDirectionSet());

@@ -318,10 +318,9 @@ public final class DbUtils {
      * @param pw PrintWriter to print to
      */
     public static void printStackTrace(final SQLException e, final PrintWriter pw) {
-
         SQLException next = e;
         while (next != null) {
-            next.printStackTrace(pw);
+            pw.println("A database error occurred: " + next.getMessage()); // Messaggio generico
             next = next.getNextException();
             if (next != null) {
                 pw.println("Next SQLException:");

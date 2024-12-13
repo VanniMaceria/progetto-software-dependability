@@ -34,7 +34,10 @@ import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
+@RunWith(Enclosed.class)
 public class DbUtilsTest {
 
     public static class DriverProxyTest {
@@ -80,44 +83,19 @@ public class DbUtilsTest {
         verify(mockCon).close();
     }
 
-    //issue #7
     @Test
     public void testCloseNullConnection() throws Exception {
-        boolean throwsException = false;
-
-        try {
-            DbUtils.close((Connection) null);
-        } catch (Exception e) {
-            throwsException = true;
-        }
-        //mi aspetto che il valore di throwsException sia false, se così non è printa il messaggio
-        assertFalse("The value of SQL Connection can also be null", throwsException);
+        assertDoesNotThrow(() -> DbUtils.close((Connection) null));
     }
 
-    //issue #8
     @Test
     public void testCloseNullResultSet() throws Exception {
-        boolean throwsException = false;
-
-        try {
-            DbUtils.close((ResultSet) null);
-        } catch (Exception e) {
-            throwsException = true;
-        }
-        assertFalse("The ResultSet can also be null", throwsException);
+        assertDoesNotThrow(() -> DbUtils.close((ResultSet) null));
     }
 
-    //issue #9
     @Test
     public void testCloseNullStatement() throws Exception {
-        boolean throwsException = false;
-
-        try {
-            DbUtils.close((Statement) null);
-        } catch (Exception e) {
-            throwsException = true;
-        }
-        assertFalse("The Statement can also be null", throwsException);
+        assertDoesNotThrow(() -> DbUtils.close((Statement) null));
     }
 
     @Test
@@ -162,7 +140,6 @@ public class DbUtilsTest {
         verify(mockStatement).close();
     }
 
-    //issue #10
     @Test
     public void testCloseQuietlyConnectionThrowingException() throws Exception {
         final Connection mockConnection = mock(Connection.class);
@@ -183,28 +160,19 @@ public class DbUtilsTest {
         verify(mockStatement).close();
     }
 
-    //issue #11
     @Test
     public void testCloseQuietlyNullConnection() throws Exception {
-        assertDoesNotThrow(() -> {
-            DbUtils.closeQuietly((Connection) null);
-        });
+        assertDoesNotThrow(() -> DbUtils.closeQuietly((Connection) null));
     }
 
-    //issue #12
     @Test
     public void testCloseQuietlyNullResultSet() throws Exception {
-        assertDoesNotThrow(() -> {
-            DbUtils.closeQuietly((ResultSet) null);
-        });
+        assertDoesNotThrow(() -> DbUtils.closeQuietly((ResultSet) null));
     }
 
-    //issue #13
     @Test
     public void testCloseQuietlyNullStatement() throws Exception {
-        assertDoesNotThrow(() -> {
-            DbUtils.closeQuietly((Statement) null);
-        });
+        assertDoesNotThrow(() -> DbUtils.closeQuietly((Statement) null));
     }
 
     @Test
@@ -214,18 +182,13 @@ public class DbUtilsTest {
         verify(mockResultSet).close();
     }
 
-    //issue #15
     @Test
     public void testCloseQuietlyResultSetThrowingException() throws Exception {
         final ResultSet mockResultSet = mock(ResultSet.class);
-        // Simula il lancio di una SQLException quando viene chiamato close
         doThrow(SQLException.class).when(mockResultSet).close();
-        // Chiusura del ResultSet
         DbUtils.closeQuietly(mockResultSet);
-        // Verifica che close sia stato chiamato
         verify(mockResultSet).close();
     }
-
 
     @Test
     public void testCloseQuietlyStatement() throws Exception {
@@ -234,7 +197,6 @@ public class DbUtilsTest {
         verify(mockStatement).close();
     }
 
-    //issue #14
     @Test
     public void testCloseQuietlyStatementThrowingException() throws Exception {
         final Statement mockStatement = mock(Statement.class);
@@ -282,7 +244,6 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
-    //issue #16
     @Test
     public void testCommitAndCloseQuietlyWithNullDoesNotThrowAnSQLException() {
         assertDoesNotThrow(() -> DbUtils.commitAndCloseQuietly(null));
@@ -294,7 +255,7 @@ public class DbUtilsTest {
         doThrow(SQLException.class).when(mockConnection).commit();
         try {
             DbUtils.commitAndClose(mockConnection);
-            fail("DbUtils.commitAndClose() swallowed SQLEception!");
+            fail("DbUtils.commitAndClose() swallowed SQLException!");
         } catch (final SQLException e) {
             // we expect this exception
         }
@@ -303,9 +264,7 @@ public class DbUtilsTest {
 
     @Test
     public void testLoadDriverReturnsFalse() {
-
         assertFalse(DbUtils.loadDriver(""));
-
     }
 
     @Test
@@ -323,7 +282,6 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
-    //issue #17
     @Test
     public void testRollbackAndCloseNull() throws Exception {
         assertDoesNotThrow(() -> DbUtils.rollbackAndClose(null));
@@ -337,7 +295,6 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
-    //issue #18
     @Test
     public void testRollbackAndCloseQuietlyNull() throws Exception {
         assertDoesNotThrow(() -> DbUtils.rollbackAndCloseQuietly(null));
@@ -366,7 +323,6 @@ public class DbUtilsTest {
         verify(mockConnection).close();
     }
 
-    //issue #20
     @Test
     public void testRollbackNull() throws Exception {
         assertDoesNotThrow(() -> DbUtils.rollback(null));
@@ -379,7 +335,6 @@ public class DbUtilsTest {
         verify(mockConnection).rollback();
     }
 
-    //issue #19
     @Test
     public void testRollbackQuietlyNull() throws Exception {
         assertDoesNotThrow(() -> DbUtils.rollbackQuietly(null));

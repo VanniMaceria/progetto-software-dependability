@@ -16,8 +16,8 @@
  */
 package org.apache.commons.dbutils;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,25 +25,20 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-/**
- * ResultSetIteratorTest
- */
 public class ResultSetIteratorTest extends BaseTestCase {
 
-    //issue #22
     @Test
-    public void testCreatesResultSetIteratorTakingThreeArgumentsAndCallsRemove() throws SQLException {
+    public void testRemoveCallsDeleteRow() throws SQLException {
         final ResultSet resultSet = mock(ResultSet.class);
         final ResultSetIterator resultSetIterator = new ResultSetIterator(resultSet, null);
 
         resultSetIterator.remove();
 
-        // Assert: Verifica che il metodo deleteRow() del ResultSet sia stato chiamato
         verify(resultSet).deleteRow();
     }
 
-    public void testNext() {
-
+    @Test
+    public void testNextReturnsCorrectRows() throws SQLException {
         final Iterator<Object[]> iter = new ResultSetIterator(getResultSet());
 
         assertTrue(iter.hasNext());
@@ -56,21 +51,18 @@ public class ResultSetIteratorTest extends BaseTestCase {
         assertTrue(iter.hasNext());
         row = iter.next();
         assertEquals(COLS, row.length);
-
         assertEquals("4", row[0]);
         assertEquals("5", row[1]);
         assertEquals("SIX", row[2]);
 
         assertFalse(iter.hasNext());
-        assertTrue(iter.next().length == 0);
+        assertEquals(0, iter.next().length);
     }
 
     @Test
     public void testRethrowThrowsRuntimeException() {
-
         final ResultSetIterator resultSetIterator = new ResultSetIterator((ResultSet) null);
-        final Throwable throwable = new Throwable();
-        final SQLException sqlException = new SQLException(throwable);
+        final SQLException sqlException = new SQLException(new Throwable());
 
         try {
             resultSetIterator.rethrow(sqlException);
@@ -78,7 +70,5 @@ public class ResultSetIteratorTest extends BaseTestCase {
         } catch (final RuntimeException e) {
             assertEquals(ResultSetIterator.class.getName(), e.getStackTrace()[0].getClassName());
         }
-
     }
-
 }

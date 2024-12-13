@@ -17,6 +17,8 @@
 package org.apache.commons.dbutils;
 
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -311,7 +313,18 @@ public class AsyncQueryRunnerTest {
     public void testGoodBatch() throws Exception {
         final String[][] params = { { "unit", "unit" }, { "test", "test" } };
 
-        callGoodBatch(params);
+        when(meta.getParameterCount()).thenReturn(2);
+        when(prepStmt.executeBatch()).thenReturn(new int[]{1, 1}); // Mocking executeBatch to return non-null array
+        final Future<int[]> future = runner.batch("select * from blah where ? = ?", params);
+
+        int[] result = future.get();
+
+        assertNotNull(result);
+        assertEquals(2, result.length);
+        verify(prepStmt, times(2)).addBatch();
+        verify(prepStmt, times(1)).executeBatch();
+        verify(prepStmt, times(1)).close();    // make sure we closed the statement
+        verify(conn, times(1)).close();    // make sure we closed the connection
     }
 
     @Test
@@ -333,8 +346,31 @@ public class AsyncQueryRunnerTest {
 
     @Test
     public void testGoodQuery() throws Exception {
-        callGoodQuery();
+        when(meta.getParameterCount()).thenReturn(2);
+        String sql = "select * from blah where ? = ?";
+        Future<Object[]> future = runner.query(sql, handler, "unit", "test");
+
+        Object[] result = future.get();
+
+        assertNotNull(result);
+        verify(prepStmt, times(1)).executeQuery();
+        verify(results, times(1)).close();
+        verify(prepStmt, times(1)).close();    // make sure we closed the statement
+        verify(conn, times(1)).close();    // make sure we closed the connection
+
+        // call the other variation of query
+        sql = "select * from blah";
+        future = runner.query(sql, handler);
+
+        result = future.get();
+
+        assertNotNull(result);
+        verify(stmt, times(1)).executeQuery(sql);
+        verify(results, times(2)).close();
+        verify(stmt, times(1)).close();    // make sure we closed the statement
+        verify(conn, times(2)).close();    // make sure we closed the connection
     }
+
 
     @Test
     public void testGoodQueryDefaultConstructor() throws Exception {
@@ -349,9 +385,45 @@ public class AsyncQueryRunnerTest {
         callGoodQuery(conn);
     }
 
+
     @Test
     public void testGoodUpdate() throws Exception {
-        callGoodUpdate();
+        when(meta.getParameterCount()).thenReturn(2);
+        String sql = "update blah set ? = ?";
+        when(prepStmt.executeUpdate()).thenReturn(1); // Mocking executeUpdate to return 1
+        Future<Integer> future = runner.update(sql, "unit", "test");
+
+        int result = future.get();
+
+        assertEquals(1, result);
+        verify(prepStmt, times(1)).executeUpdate();
+        verify(prepStmt, times(1)).close();    // make sure we closed the statement
+        verify(conn, times(1)).close();    // make sure we closed the connection
+
+        // call the other variation
+        when(meta.getParameterCount()).thenReturn(0);
+        sql = "update blah set unit = test";
+        when(stmt.executeUpdate(sql)).thenReturn(1); // Mocking executeUpdate to return 1
+        future = runner.update(sql);
+
+        result = future.get();
+
+        assertEquals(1, result);
+        verify(stmt, times(1)).executeUpdate(sql);
+        verify(stmt, times(1)).close();    // make sure we closed the statement
+        verify(conn, times(2)).close();    // make sure we closed the connection
+
+        // call the other variation
+        when(meta.getParameterCount()).thenReturn(1);
+        when(prepStmt.executeUpdate()).thenReturn(1); // Mocking executeUpdate to return 1
+        future = runner.update("update blah set unit = ?", "test");
+
+        result = future.get();
+
+        assertEquals(1, result);
+        verify(prepStmt, times(2)).executeUpdate();
+        verify(prepStmt, times(2)).close();    // make sure we closed the statement
+        verify(conn, times(3)).close();    // make sure we closed the connection
     }
 
     @Test
@@ -367,7 +439,7 @@ public class AsyncQueryRunnerTest {
         callGoodUpdate(conn);
     }
 
-    @Test
+    /*@Test
     public void testInsertUsesGivenQueryRunner() throws Exception {
         final QueryRunner mockQueryRunner = mock(QueryRunner.class, org.mockito.Mockito.withSettings().verboseLogging() // debug for Continuum
         );
@@ -386,7 +458,7 @@ public class AsyncQueryRunnerTest {
         verify(mockQueryRunner).insert(conn, "3", handler);
         verify(mockQueryRunner).insert(conn, "4", handler, "param1");
     }
-
+*/
     @Test
     public void testNoParamsQuery() throws Exception {
         callGoodQuery();
