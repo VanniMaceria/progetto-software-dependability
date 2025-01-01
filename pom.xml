@@ -213,8 +213,8 @@
           </targetTests>-->
         </configuration>
       </plugin>
-      <!-- Plugin per JMH -->
-      <!-- <plugin>
+      <!-- Plugin per JMH
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -227,8 +227,10 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
-      <!- Plugin Maven Shade per creare un JAR eseguibile -->
-      <!--<plugin>
+      -->
+      
+      <!-- Plugin Maven Shade per creare un JAR eseguibile
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.5.2</version>
@@ -248,7 +250,8 @@
             </configuration>
           </execution>
         </executions>
-      </plugin> -->
+      </plugin>
+      -->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -329,6 +329,11 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <excludes>
+            <exclude>org/apache/commons/dbutils/jmh/**</exclude>
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>
